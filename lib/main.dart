@@ -63,6 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< Updated upstream
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -111,5 +112,35 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+=======
+    return MaterialApp(
+        initialRoute: '/Order',
+        onGenerateRoute: RouteGenerator.generateRoute,
+        debugShowCheckedModeBanner: false,
+        // localizationsDelegates: [
+        //   S.delegate,
+        //   GlobalMaterialLocalizations.delegate,
+        //   GlobalWidgetsLocalizations.delegate,
+        // ],
+        // supportedLocales: S.delegate.supportedLocales,
+        theme: ThemeData(
+          brightness: Brightness.light,
+          primaryColor: Colors.green,
+          // accentColor: const Color(0xFFC4C4C4),
+          fontFamily: 'OpenSans',
+          textTheme: const TextTheme(
+              headline4: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+              headline5: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              headline6: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+              subtitle1: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: Colors.grey),
+              subtitle2: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                  color: Colors.grey)),
+        ));
+>>>>>>> Stashed changes
   }
 }
