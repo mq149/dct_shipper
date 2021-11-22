@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState>? parentScaffoldKey;
+  // ignore: prefer_const_constructors_in_immutables
+  HomeScreen({Key? key, this.parentScaffoldKey}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -10,6 +12,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: Colors.white,
+      key: widget.parentScaffoldKey,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          'Home',
+          style: Theme.of(context).textTheme.bodyText1,
+        ),
+        automaticallyImplyLeading: false,
+      ),
+      body: Column(children: <Widget>[]),
+    );
   }
 }

@@ -1,12 +1,22 @@
 import 'package:dct_shipper/models/route_argument.dart';
+import 'package:dct_shipper/route_generator.dart';
+import 'package:dct_shipper/views/home.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class PagesScreen extends StatefulWidget {
   dynamic currentTab;
-  late RouteArgument routeArgument;
+  RouteArgument routeArgument;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  PagesScreen({Key? key, required this.currentTab}) : super(key: key) {
+  late Widget currentPage;
+  final screenMap = {
+    '0': '/Home',
+    '1': '/Order',
+    '2': '/Notification',
+    '3': '/Profile'
+  };
+  PagesScreen({Key? key, required this.currentTab, required this.routeArgument})
+      : super(key: key) {
     if (currentTab != null) {
       if (currentTab is RouteArgument) {
         routeArgument = currentTab;
@@ -16,6 +26,7 @@ class PagesScreen extends StatefulWidget {
       currentTab = 0;
     }
     currentTab = 0;
+    currentPage = HomeScreen(parentScaffoldKey: scaffoldKey);
   }
 
   @override
@@ -26,6 +37,10 @@ class _PagesScreenState extends State<PagesScreen> {
   void _onItemTapped(int index) {
     setState(() {
       widget.currentTab = index;
+      widget.currentPage = RouteGenerator.generateScreen(
+          widget.screenMap["$index"] ?? "",
+          widget.scaffoldKey,
+          widget.routeArgument);
     });
   }
 
@@ -38,7 +53,7 @@ class _PagesScreenState extends State<PagesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: widget.key,
-      body: Container(),
+      body: widget.currentPage,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedFontSize: 10.0,
@@ -46,7 +61,7 @@ class _PagesScreenState extends State<PagesScreen> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
               title: Container(
-                height: 5,
+                height: 0,
               ),
               activeIcon: Container(
                   width: 40,
@@ -58,7 +73,7 @@ class _PagesScreenState extends State<PagesScreen> {
               icon: const Icon(Icons.home, color: Colors.black)),
           BottomNavigationBarItem(
               title: Container(
-                height: 5,
+                height: 0,
               ),
               activeIcon: Container(
                   width: 40,
@@ -70,7 +85,7 @@ class _PagesScreenState extends State<PagesScreen> {
               icon: const Icon(Icons.list_alt_outlined, color: Colors.black)),
           BottomNavigationBarItem(
               title: Container(
-                height: 5,
+                height: 0,
               ),
               activeIcon: Container(
                   width: 40,
@@ -83,7 +98,7 @@ class _PagesScreenState extends State<PagesScreen> {
               icon: const Icon(Icons.notifications, color: Colors.black)),
           BottomNavigationBarItem(
               title: Container(
-                height: 5,
+                height: 0,
               ),
               activeIcon: Container(
                   width: 40,
