@@ -1,4 +1,4 @@
-import 'package:dct_shipper/bases/base_controller.dart';
+import '../bases/base_controller.dart';
 
 class PagesController extends BaseController {
   int currentIndex;
