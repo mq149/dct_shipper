@@ -1,12 +1,19 @@
-import 'package:dct_shipper/helpers/config.dart';
-import 'package:dct_shipper/models/order.dart';
+import 'package:marquee/marquee.dart';
+
+import '../../helpers/config.dart';
+import '../../models/data_models/order.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class OrderItemWidget extends StatefulWidget {
   Order order;
-  final Function(String id) onTap;
-  OrderItemWidget({Key? key, required this.order, required this.onTap})
+  final Function(int id, bool previewing) onTap;
+  bool selected;
+  OrderItemWidget(
+      {Key? key,
+      required this.order,
+      required this.selected,
+      required this.onTap})
       : super(key: key);
 
   @override
@@ -18,59 +25,79 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        widget.onTap(widget.order.id);
+        widget.onTap(widget.order.id, true);
       },
-      child: SizedBox(
+      child: Container(
+          color:
+              widget.selected ? Theme.of(context).primaryColor : Colors.white,
+          padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
           height: 80,
           child: Column(children: <Widget>[
+            Container(
+              height: 1,
+            ),
             Expanded(
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(
-                    child: Container(
-                        padding: const EdgeInsets.fromLTRB(18, 8, 0, 8),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'Order' +
-                                  widget.order.id +
-                                  ': ' +
-                                  widget.order.storeName,
-                              style: Theme.of(context).textTheme.headline4,
-                            ),
-                            Text(
-                              widget.order.storeAddress,
-                              style: Theme.of(context).textTheme.subtitle2,
-                            )
-                          ],
-                        ))),
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Order#' +
+                          widget.order.id.toString() +
+                          ': ' +
+                          widget.order.store.name,
+                      style: widget.selected
+                          ? Theme.of(context)
+                              .textTheme
+                              .headline4
+                              ?.copyWith(color: Colors.white)
+                          : Theme.of(context).textTheme.headline4,
+                    ),
+                    Text(
+                      widget.order.store.address.getAddress(),
+                      style: widget.selected
+                          ? Theme.of(context)
+                              .textTheme
+                              .subtitle2
+                              ?.copyWith(color: Colors.white)
+                          : Theme.of(context).textTheme.subtitle2,
+                    )
+                  ],
+                )),
                 const SizedBox(
                   width: 10,
                 ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: Config.getBorderRadius(),
-                      // boxShadow: Config.getShadow()
-                    ),
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_forward,
-                          color: Theme.of(context).primaryColor),
-                      onPressed: () => {},
-                    ),
-                  ),
-                )
+                widget.selected
+                    ? Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: Config.getBorderRadius()),
+                        child: IconButton(
+                          icon: Icon(Icons.arrow_forward,
+                              color: Theme.of(context).primaryColor),
+                          onPressed: () {
+                            widget.onTap(widget.order.id, false);
+                          },
+                        ),
+                      )
+                    : const SizedBox(
+                        width: 40,
+                        height: 40,
+                      )
               ],
             )),
-            Container(height: 1, color: Colors.black.withOpacity(0.5))
+            Container(
+                height: 1,
+                color: widget.selected
+                    ? Colors.transparent
+                    : Colors.black.withOpacity(0.2))
           ])),
     );
   }

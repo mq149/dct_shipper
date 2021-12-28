@@ -1,6 +1,6 @@
-import 'package:dct_shipper/models/route_argument.dart';
-import 'package:dct_shipper/route_generator.dart';
-import 'package:dct_shipper/views/home.dart';
+import '../models/route_argument.dart';
+import '../route_generator.dart';
+import 'home.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

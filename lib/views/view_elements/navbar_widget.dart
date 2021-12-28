@@ -1,5 +1,5 @@
-import 'package:dct_shipper/helpers/config.dart';
-import 'package:dct_shipper/models/navbar_button.dart';
+import '../../helpers/config.dart';
+import '../../models/navbar_button.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -7,11 +7,13 @@ class NavbarWidget extends StatelessWidget {
   NavbarButton? leftButton;
   NavbarButton? rightButton;
   String title;
+  bool floatingTitle;
   NavbarWidget({
     Key? key,
     this.leftButton,
     this.rightButton,
     required this.title,
+    this.floatingTitle = true,
   }) : super(key: key);
 
   @override
@@ -32,19 +34,24 @@ class NavbarWidget extends StatelessWidget {
                   child: IconButton(
                       icon: Icon(
                         leftButton?.icon,
-                        color: Theme.of(context).primaryColor,
+                        color: leftButton?.iconColor ??
+                            Theme.of(context).primaryColor,
                       ),
-                      onPressed: () => {}),
+                      onPressed: () {
+                        leftButton!.onPressed();
+                      }),
                 )
               : const Padding(padding: EdgeInsets.all(20)),
           Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               height: 40,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: Config.getShadow()),
+              decoration: floatingTitle
+                  ? BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: Config.getShadow())
+                  : null,
               child: Text(
                 title,
                 style: Theme.of(context).textTheme.headline6,
@@ -61,9 +68,12 @@ class NavbarWidget extends StatelessWidget {
                   child: IconButton(
                       icon: Icon(
                         rightButton?.icon,
-                        color: Theme.of(context).primaryColor,
+                        color: rightButton?.iconColor ??
+                            Theme.of(context).primaryColor,
                       ),
-                      onPressed: () => {}),
+                      onPressed: () {
+                        rightButton!.onPressed();
+                      }),
                 )
               : const Padding(padding: EdgeInsets.all(20)),
         ]);

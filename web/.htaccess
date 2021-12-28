@@ -1,0 +1,6 @@
+<ifModule mod_headers.c>
+    SetEnvIf Origin "http(s)?://(www.)?(localhost:5001)$" AccessControlAllowOrigin=$0
+    Header add Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
+    Header always set Access-Control-Allow-Methods: "GET,POST,PUT,DELETE,OPTIONS"
+    Header always append X-Frame-Options Allow
+</ifModule>

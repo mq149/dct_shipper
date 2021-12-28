@@ -1,5 +1,6 @@
-import 'package:dct_shipper/views/home.dart';
-import 'package:dct_shipper/views/order.dart';
+import 'views/home.dart';
+import 'views/order.dart';
+import 'views/order_detail.dart';
 
 import '../models/route_argument.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,10 @@ class RouteGenerator {
 
       case '/Order':
         return MaterialPageRoute(builder: (_) => OrderScreen());
+      case '/OrderDetail':
+        return MaterialPageRoute(
+            builder: (_) =>
+                OrderDetailScreen(routeArgument: args as RouteArgument));
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return MaterialPageRoute(
