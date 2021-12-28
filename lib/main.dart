@@ -1,10 +1,15 @@
-import 'package:dct_shipper/extensions/hex_color.dart';
+import 'dart:io';
+
+import 'package:google_fonts/google_fonts.dart';
+
+import 'helpers/http_override.dart';
 import 'package:dct_shipper/helpers/config.dart';
 
 import 'route_generator.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 
@@ -23,7 +28,7 @@ class MyApp extends StatelessWidget {
           accentColor: Config.accentColor,
           errorColor: Config.errorColor,
           unselectedWidgetColor: Config.unselectedWidgetColor,
-          fontFamily: 'OpenSans',
+          fontFamily: GoogleFonts.openSans().fontFamily,
           textTheme: const TextTheme(
               headline4: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
               headline5: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),

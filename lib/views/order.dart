@@ -18,7 +18,7 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  List<Order> orders = Helper.getDummyOrders(5);
+  List<Order> orders = Helper.getDummyOrders(2);
 
   late OrderController _con;
 
@@ -29,6 +29,9 @@ class _OrderScreenState extends State<OrderScreen> {
   @override
   void initState() {
     _con.getAvailableOrders();
+    _con.addListener(() {
+      setState(() {});
+    });
     super.initState();
   }
 
@@ -49,12 +52,11 @@ class _OrderScreenState extends State<OrderScreen> {
                 Expanded(
                   flex: 1,
                   child: OrderListWidget(
-                    orders: orders,
+                    orders: _con.orders,
                     onPressed: (id) {
                       Navigator.pushNamed(context, "/OrderDetail",
                           arguments: RouteArgument(
                               id: id.toString(), heroTag: id.toString()));
-                      print("Go to detail screen with id=$id");
                     },
                   ),
                 )

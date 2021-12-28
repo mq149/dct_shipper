@@ -29,26 +29,28 @@ class Order {
       this.orderDate,
       this.deliveryDate);
 
-  //     factory Category.fromJson2(Map<String, dynamic> parsedJson) {
-  //   return Category.init(
-  //       id: parsedJson['id'].toString(),
-  //       name: parsedJson['name'] ?? '',
-  //       image: config.DefaultData.foodMedia);
-  // }
-
-  // Category.fromJSON(Map<String, dynamic> jsonMap) {
-  //   try {
-  //     id = jsonMap['id'].toString();
-  //     name = jsonMap['name'];
-  //     image = config.DefaultData.categoryMedia;
-  //     // jsonMap['media'] != null && (jsonMap['media'] as List).length > 0
-  //     //     ? Media.fromJSON(jsonMap['media'][0])
-  //     //     : new Media();
-  //   } catch (e) {
-  //     id = '';
-  //     name = '';
-  //     image = new Media();
-  //     print(CustomTrace(StackTrace.current, message: e));
-  //   }
-  // }
+  factory Order.fromJSON(Map<String, dynamic> parsedJSON) {
+    Store store = Store.fromJSON(parsedJSON['CuaHang']);
+    Customer customer = Customer.fromJSON(parsedJSON['KhachHang']);
+    OrderStatus status = OrderStatus.fromJSON(parsedJSON['TTDH']);
+    PaymentMethod paymentMethod = PaymentMethod.fromJSON(parsedJSON['PTTT']);
+    Address orderAddress = Address.fromJSON(parsedJSON['DiaChiGiao']);
+    Shipper shipper = Shipper.initEmpty();
+    if (parsedJSON['shipper'] != null) {
+      shipper = Shipper.fromJSON(parsedJSON['Shipper']);
+    }
+    DateTime orderDate = DateTime.parse(parsedJSON['NgayMuaHang']);
+    DateTime deliveryDate = DateTime.parse(parsedJSON['NgayGiao']);
+    return Order(
+        parsedJSON['Id'],
+        store,
+        customer,
+        shipper,
+        status,
+        paymentMethod,
+        parsedJSON['TongTien'],
+        orderAddress,
+        orderDate,
+        deliveryDate);
+  }
 }

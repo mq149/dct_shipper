@@ -1,3 +1,5 @@
+import 'package:marquee/marquee.dart';
+
 import '../../helpers/config.dart';
 import '../../models/data_models/order.dart';
 import 'package:flutter/material.dart';
@@ -75,10 +77,8 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                         width: 40,
                         height: 40,
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: Config.getBorderRadius(),
-                          // boxShadow: Config.getShadow()
-                        ),
+                            color: Colors.white,
+                            borderRadius: Config.getBorderRadius()),
                         child: IconButton(
                           icon: Icon(Icons.arrow_forward,
                               color: Theme.of(context).primaryColor),

@@ -36,7 +36,10 @@ class _OrderListWidgetState extends State<OrderListWidget> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.transparent, boxShadow: Config.getShadow()),
+          color: Colors.white,
+          boxShadow: Config.getShadow(),
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
       child: ClipRRect(
         borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20), topRight: Radius.circular(20)),

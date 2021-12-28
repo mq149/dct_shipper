@@ -17,4 +17,24 @@ class Address {
   String getAddress() {
     return "$number, $street, $subdistrict, $district, $city";
   }
+
+  factory Address.initEmpty() {
+    return Address(
+        id: -1,
+        number: "",
+        street: "",
+        subdistrict: "",
+        district: "",
+        city: "");
+  }
+
+  factory Address.fromJSON(Map<String, dynamic> parsedJson) {
+    return Address(
+        id: parsedJson['Id'],
+        number: parsedJson['SoNhaTo'] ?? '',
+        street: parsedJson['Duong'] ?? '',
+        subdistrict: parsedJson['XaPhuong'] ?? '',
+        district: parsedJson['QuanHuyen'] ?? '',
+        city: parsedJson['TinhTP'] ?? '');
+  }
 }

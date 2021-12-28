@@ -6,7 +6,6 @@ import 'package:dct_shipper/views/view_elements/order_comfirm_widget.dart';
 
 import '../controllers/order_detail_controller.dart';
 import '../models/navbar_button.dart';
-import '../models/data_models/order.dart';
 import '../models/route_argument.dart';
 import 'view_elements/navbar_widget.dart';
 import 'package:flutter/material.dart';
@@ -36,33 +35,36 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
 
   @override
   void initState() {
-    _con.getOrder(int.parse(widget.routeArgument.id));
-
+    _con.orderId = widget.routeArgument.id;
+    _con.getOrder();
+    _con.addListener(() {
+      setState(() {});
+    });
     super.initState();
   }
 
-  void setOrder(bool accept) {
+  void _setOrderComfirmWidget(bool visible) {
     setState(() {
-      _didPressAccept = accept;
+      _comfirmWidgetVisible = visible;
     });
   }
 
-  void setCancelWidget(bool visible) {
+  void _setOrderCancelWidget(bool visible) {
     setState(() {
       _didPressCancel = visible;
     });
   }
 
-  Future<void> doSomeLoading() async {
-    setState(() {
-      _loading = true;
-    });
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        _loading = false;
-        setOrder(false);
-      });
-    });
+  bool _acceptButtonVisible() {
+    return !_con.orderAccepted();
+  }
+
+  bool _orderComfirmSliderVisible() {
+    return _comfirmWidgetVisible && !_con.orderAccepted();
+  }
+
+  bool _orderCancelButtonVisible() {
+    return _con.canCancelOrder();
   }
 
   @override
@@ -75,6 +77,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
           child: Stack(
             fit: StackFit.expand,
             children: <Widget>[
+              /// Order information
               Container(
                 padding: const EdgeInsets.fromLTRB(0, 70, 0, 0),
                 child: Column(
@@ -95,6 +98,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                   ],
                 ),
               ),
+
+              /// Top bar
               Positioned(
                   top: 10,
                   left: 0,
@@ -111,17 +116,19 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                           onPressed: () {
                             Navigator.pop(context);
                           }),
-                      rightButton: _con.orderAccepted()
-                          ? null
-                          : NavbarButton(
+                      rightButton: _orderCancelButtonVisible()
+                          ? NavbarButton(
                               icon: Icons.close,
                               iconColor: Theme.of(context).errorColor,
                               onPressed: () {
-                                setCancelWidget(true);
-                              }),
+                                _setOrderCancelWidget(true);
+                              })
+                          : null,
                     ),
                   )),
-              _con.orderAccepted()
+
+              /// Order Accept Button
+              _acceptButtonVisible()
                   ? Positioned(
                       bottom: 10,
                       left: 0,
@@ -135,7 +142,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                               boxShadow: Config.getShadow()),
                           child: TextButton(
                             onPressed: () {
-                              setOrder(true);
+                              _setOrderComfirmWidget(true);
                             },
                             child: Container(
                               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -156,30 +163,60 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                       ),
                     )
                   : Container(),
-              Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: AnimatedOpacity(
-                    duration: Config.animationDuration,
-                    opacity: Helper.getOpacity(_didPressAccept),
-                    child: _comfirmWidgetVisible
-                        ? OrderComfirmWidget(
-                            event: (finished) => {doSomeLoading()},
-                            cancel: (canceled) => {setOrder(false)},
-                          )
-                        : Container(),
-                    onEnd: () => {_comfirmWidgetVisible = _didPressAccept},
-                  )),
-              _loading ? const CircularLoadingWidget() : Container(),
+
+              /// Order Comfirm Slider
+              _orderComfirmSliderVisible()
+                  ? Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: OrderComfirmWidget(
+                        event: (finished) => {
+                          _con.comfirmOrder((success) {
+                            setState(() {
+                              _con.isLoading = false;
+                            });
+                            if (success) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  Helper.getSnackBar(
+                                      'Order comfirmed successfully'));
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  Helper.getSnackBar(
+                                      'Failed to comfirm order'));
+                            }
+                          })
+                        },
+                        cancel: (canceled) => {_setOrderComfirmWidget(false)},
+                      ))
+                  : Container(),
+
+              /// Order Cancel Popup
               _didPressCancel
                   ? OrderCancelWidget(
-                      didComfirmCancel: () {},
+                      didComfirmCancel: () {
+                        _con.cancelOrder((success) {
+                          setState(() {
+                            _con.isLoading = false;
+                          });
+                          if (success) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                Helper.getSnackBar('Order cancelled'));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                Helper.getSnackBar('Failed to cancel order'));
+                          }
+                          _setOrderCancelWidget(false);
+                        });
+                      },
                       didPressClose: () {
-                        setCancelWidget(false);
+                        _setOrderCancelWidget(false);
                       },
                     )
-                  : Container()
+                  : Container(),
+
+              /// Loading Widget
+              _con.isLoading ? const CircularLoadingWidget() : Container(),
             ],
           ),
         ));

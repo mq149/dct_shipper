@@ -5,9 +5,15 @@ import 'package:dct_shipper/models/data_models/payment_method.dart';
 import 'package:dct_shipper/models/data_models/role.dart';
 import 'package:dct_shipper/models/data_models/shipper.dart';
 import 'package:dct_shipper/models/data_models/store.dart';
+import 'package:flutter/material.dart';
 
 import '../models/data_models/order.dart';
 import 'config.dart';
+
+void printL(Object object) {
+  // ignore: avoid_print
+  print(object);
+}
 
 class Helper {
   static List<Order> getDummyOrders(int numberOfOrders) {
@@ -38,14 +44,18 @@ class Helper {
         true,
         "00A0-00000",
         "Honda Wave");
+
+    final status2 = OrderStatus(id: 2, name: "Cửa hàng đã xác nhân");
+    final status3 = OrderStatus(id: 3, name: "Đang lấy hàng");
+    final status4 = OrderStatus(id: 3, name: "Đang giao hàng");
     for (var i = 0; i < numberOfOrders; i++) {
       Order order;
       if (i == 1) {
-        order = Order(i, store, customer, null, status, pm, 45000.0, address,
+        order = Order(i, store, customer, null, status3, pm, 45000.0, address,
             DateTime.now(), DateTime.now());
       } else {
-        order = Order(i, store, customer, shipper, status, pm, 45000.0, address,
-            DateTime.now(), DateTime.now());
+        order = Order(i, store, customer, shipper, status2, pm, 45000.0,
+            address, DateTime.now(), DateTime.now());
       }
       orders.add(order);
     }
@@ -53,14 +63,14 @@ class Helper {
   }
 
   static Uri getUri(String path) {
-    String _path = Uri.parse(Config.url).path;
+    String _path = Uri.parse(Config.baseURL()).path;
     if (!_path.endsWith('/')) {
       _path += '/';
     }
     Uri uri = Uri(
-        scheme: Uri.parse(Config.url).scheme,
-        host: Uri.parse(Config.url).host,
-        port: Uri.parse(Config.url).port,
+        scheme: Uri.parse(Config.baseURL()).scheme,
+        host: Uri.parse(Config.baseURL()).host,
+        port: Uri.parse(Config.baseURL()).port,
         path: _path + path);
     return uri;
   }
@@ -71,5 +81,9 @@ class Helper {
 
   static double getOpacity(bool visible) {
     return visible ? 1.0 : 0.0;
+  }
+
+  static SnackBar getSnackBar(String text) {
+    return SnackBar(content: Text(text), backgroundColor: Config.primaryColor);
   }
 }
