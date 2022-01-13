@@ -7,7 +7,12 @@ import 'package:flutter/material.dart';
 class OrderListWidget extends StatefulWidget {
   List<Order> orders;
   final Function(int id) onPressed;
-  OrderListWidget({Key? key, required this.orders, required this.onPressed})
+  final Future<void> Function() onRefresh;
+  OrderListWidget(
+      {Key? key,
+      required this.orders,
+      required this.onPressed,
+      required this.onRefresh})
       : super(key: key);
 
   @override
@@ -34,32 +39,34 @@ class _OrderListWidgetState extends State<OrderListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: Config.getShadow(),
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-        child: ListView.builder(
-            padding: const EdgeInsets.all(0),
-            itemCount: widget.orders.length,
-            itemBuilder: (BuildContext context, int index) {
-              return OrderItemWidget(
-                order: widget.orders[index],
-                selected: id == widget.orders[index].id,
-                onTap: (id, previewing) {
-                  if (previewing) {
-                    selectItem(id);
-                  } else {
-                    widget.onPressed(id);
-                  }
-                },
-              );
-            }),
-      ),
-    );
+    return RefreshIndicator(
+        onRefresh: widget.onRefresh,
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: Config.getShadow(),
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            child: ListView.builder(
+                padding: const EdgeInsets.all(0),
+                itemCount: widget.orders.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return OrderItemWidget(
+                    order: widget.orders[index],
+                    selected: id == widget.orders[index].id,
+                    onTap: (id, previewing) {
+                      if (previewing) {
+                        selectItem(id);
+                      } else {
+                        widget.onPressed(id);
+                      }
+                    },
+                  );
+                }),
+          ),
+        ));
   }
 }

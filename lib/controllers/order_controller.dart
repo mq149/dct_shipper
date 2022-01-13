@@ -13,6 +13,7 @@ class OrderController extends BaseController {
   }
 
   Future<void> getAvailableOrders() async {
+    orders = [];
     Uri uri = Helper.getUri(availableOrderPath);
     var client = http.Client();
     try {
@@ -29,5 +30,6 @@ class OrderController extends BaseController {
     } catch (e) {
       printL(e);
     }
+    return;
   }
 }

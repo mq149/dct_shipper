@@ -1,9 +1,12 @@
+import 'package:dct_shipper/helpers/helper.dart';
 import 'package:dct_shipper/models/data_models/address.dart';
 import 'package:dct_shipper/models/data_models/customer.dart';
 import 'package:dct_shipper/models/data_models/order_status.dart';
 import 'package:dct_shipper/models/data_models/payment_method.dart';
+import 'package:dct_shipper/models/data_models/product.dart';
 import 'package:dct_shipper/models/data_models/shipper.dart';
 import 'package:dct_shipper/models/data_models/store.dart';
+import 'package:dct_shipper/extensions/number_separator.dart';
 
 class Order {
   int id;
@@ -16,6 +19,7 @@ class Order {
   Address orderAddress;
   DateTime orderDate;
   DateTime deliveryDate;
+  List<Product> products;
 
   Order(
       this.id,
@@ -27,7 +31,8 @@ class Order {
       this.total,
       this.orderAddress,
       this.orderDate,
-      this.deliveryDate);
+      this.deliveryDate,
+      this.products);
 
   factory Order.fromJSON(Map<String, dynamic> parsedJSON) {
     Store store = Store.fromJSON(parsedJSON['CuaHang']);
@@ -41,6 +46,7 @@ class Order {
     }
     DateTime orderDate = DateTime.parse(parsedJSON['NgayMuaHang']);
     DateTime deliveryDate = DateTime.parse(parsedJSON['NgayGiao']);
+    final dummyProducts = Helper.getDummyProducts(5);
     return Order(
         parsedJSON['Id'],
         store,
@@ -51,6 +57,35 @@ class Order {
         parsedJSON['TongTien'],
         orderAddress,
         orderDate,
-        deliveryDate);
+        deliveryDate,
+        dummyProducts);
+  }
+
+  String getOrderTitle() {
+    return 'Order#' + id.toString() + ': ' + store.name;
+  }
+
+  String getTotalPrice() {
+    return 'Total: ' + total.toStringWithSeparators() + 'đ';
+  }
+
+  String getNumberOfItems() {
+    return 'Number of items: ' + products.length.toString();
+  }
+
+  String getDescription() {
+    String description = 'Order Description: ';
+    for (var product in products) {
+      description += product.name + ' (x' + product.unit.toString() + '), ';
+    }
+    return description.substring(0, description.lastIndexOf(','));
+  }
+
+  String getStoreAddress() {
+    return 'Store Address: ' + store.address.getAddress();
+  }
+
+  String getOrderAddress() {
+    return 'Ship to: ' + orderAddress.getAddress();
   }
 }
