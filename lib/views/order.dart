@@ -53,6 +53,9 @@ class _OrderScreenState extends State<OrderScreen> {
                   flex: 1,
                   child: OrderListWidget(
                     orders: _con.orders,
+                    onRefresh: () {
+                      return _con.getAvailableOrders();
+                    },
                     onPressed: (id) {
                       Navigator.pushNamed(context, "/OrderDetail",
                           arguments: RouteArgument(

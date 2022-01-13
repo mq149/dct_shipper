@@ -35,7 +35,16 @@ class Config {
       BoxShadow(
           color: Colors.black.withOpacity(0.2),
           offset: const Offset(0, 5),
-          blurRadius: 20)
+          blurRadius: 20),
+    ];
+  }
+
+  static List<BoxShadow> getShadow2() {
+    return [
+      BoxShadow(
+          color: Colors.black.withOpacity(0.05),
+          offset: const Offset(0, 15),
+          blurRadius: 15)
     ];
   }
 

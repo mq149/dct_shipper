@@ -70,13 +70,12 @@ class OrderDetailController extends BaseController {
       } else {
         printL("500");
       }
-      return;
     } catch (e) {
       printL(e);
       success(false);
     }
-    // isLoading = true;
-    // notifyListeners();
+    isLoading = false;
+    notifyListeners();
   }
 
   Future<void> cancelOrder(Function(bool success) success) async {

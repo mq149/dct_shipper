@@ -40,7 +40,8 @@ class MyApp extends StatelessWidget {
               subtitle2: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 13,
-                  color: Colors.grey)),
+                  color: Colors.grey),
+              caption: TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
         ));
   }
 }

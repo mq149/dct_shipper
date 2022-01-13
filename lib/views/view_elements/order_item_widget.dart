@@ -47,10 +47,7 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Order#' +
-                          widget.order.id.toString() +
-                          ': ' +
-                          widget.order.store.name,
+                      widget.order.getOrderTitle(),
                       style: widget.selected
                           ? Theme.of(context)
                               .textTheme

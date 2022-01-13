@@ -2,6 +2,7 @@ import 'package:dct_shipper/models/data_models/address.dart';
 import 'package:dct_shipper/models/data_models/customer.dart';
 import 'package:dct_shipper/models/data_models/order_status.dart';
 import 'package:dct_shipper/models/data_models/payment_method.dart';
+import 'package:dct_shipper/models/data_models/product.dart';
 import 'package:dct_shipper/models/data_models/role.dart';
 import 'package:dct_shipper/models/data_models/shipper.dart';
 import 'package:dct_shipper/models/data_models/store.dart';
@@ -16,6 +17,15 @@ void printL(Object object) {
 }
 
 class Helper {
+  static List<Product> getDummyProducts(int numberOfProducts) {
+    List<Product> products = [];
+    for (var i = 0; i < numberOfProducts; i++) {
+      Product product = Product(i, 'Product Name', 10000, 500, 1);
+      products.add(product);
+    }
+    return products;
+  }
+
   static List<Order> getDummyOrders(int numberOfOrders) {
     List<Order> orders = [];
     final pm = PaymentMethod(id: 1, name: "Tiền mặt");
@@ -48,14 +58,15 @@ class Helper {
     final status2 = OrderStatus(id: 2, name: "Cửa hàng đã xác nhân");
     final status3 = OrderStatus(id: 3, name: "Đang lấy hàng");
     final status4 = OrderStatus(id: 3, name: "Đang giao hàng");
+    final products = getDummyProducts(5);
     for (var i = 0; i < numberOfOrders; i++) {
       Order order;
       if (i == 1) {
         order = Order(i, store, customer, null, status3, pm, 45000.0, address,
-            DateTime.now(), DateTime.now());
+            DateTime.now(), DateTime.now(), products);
       } else {
         order = Order(i, store, customer, shipper, status2, pm, 45000.0,
-            address, DateTime.now(), DateTime.now());
+            address, DateTime.now(), DateTime.now(), products);
       }
       orders.add(order);
     }
