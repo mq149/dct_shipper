@@ -8,8 +8,11 @@ import 'package:dct_shipper/helpers/config.dart';
 import 'route_generator.dart';
 import 'package:flutter/material.dart';
 
+import 'package:dct_shipper/repositories/user_repository.dart' as userRepo;
+
 void main() {
   HttpOverrides.global = MyHttpOverrides();
+  userRepo.login();
   runApp(const MyApp());
 }
 
@@ -19,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        initialRoute: '/Order',
+        initialRoute: '/Profile',
         onGenerateRoute: RouteGenerator.generateRoute,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

@@ -17,6 +17,10 @@ void printL(Object object) {
 }
 
 class Helper {
+  static Role getShipperRole() {
+    return Role(id: 1, name: 'Shipper');
+  }
+
   static List<Product> getDummyProducts(int numberOfProducts) {
     List<Product> products = [];
     for (var i = 0; i < numberOfProducts; i++) {

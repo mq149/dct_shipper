@@ -54,7 +54,10 @@ class NavbarWidget extends StatelessWidget {
                   : null,
               child: Text(
                 title,
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6!
+                    .copyWith(color: Colors.grey),
               )),
           rightButton != null
               ? Container(

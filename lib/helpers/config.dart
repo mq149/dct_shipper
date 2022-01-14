@@ -26,6 +26,8 @@ class Config {
   static Color primaryColor = HexColor.fromHex('#58B742');
   static Color accentColor = Colors.white;
   static Color errorColor = HexColor.fromHex('#EE6666');
+  static Color grey = Colors.grey; //HexColor.fromHex('#747474');
+  static Color lightGrey = HexColor.fromHex('#C4C4C4');
   static Color unselectedWidgetColor = HexColor.fromHex('#E5E5E5');
 
   static Duration animationDuration = const Duration(microseconds: 500);
