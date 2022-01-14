@@ -86,6 +86,6 @@ class Order {
   }
 
   String getOrderAddress() {
-    return 'Ship to: ' + orderAddress.getAddress();
+    return 'Customer Address: ' + orderAddress.getAddress();
   }
 }

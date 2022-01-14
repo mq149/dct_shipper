@@ -51,6 +51,7 @@ class OrderDetailController extends BaseController {
     if (orderId == null) {
       return;
     }
+    var didCallBack = false;
     isLoading = true;
     notifyListeners();
     Uri uri = Helper.getUri(
@@ -63,16 +64,18 @@ class OrderDetailController extends BaseController {
             json.decode(response.body) as Map<String, dynamic>;
         var data = Map<String, dynamic>.from(decodedResponse);
         order = Order.fromJSON(data);
-        success(true);
-      } else if (response.statusCode == 403) {
-        // printL(response.body);
-        printL("403");
-      } else {
-        printL("500");
+        // To prevent showing snackbar multiple times
+        if (!didCallBack) {
+          didCallBack = !didCallBack;
+          success(true);
+        }
       }
     } catch (e) {
       printL(e);
-      success(false);
+      if (!didCallBack) {
+        didCallBack = !didCallBack;
+        success(false);
+      }
     }
     isLoading = false;
     notifyListeners();

@@ -83,16 +83,16 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                     /// Order information
                     Container(
                       padding: const EdgeInsets.fromLTRB(0, 70, 0, 0),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                              decoration: BoxDecoration(
-                                  boxShadow: Config.getShadow2(),
-                                  color: Colors.white),
-                              child: Column(
-                                children: _con.order == null
-                                    ? []
-                                    : <Widget>[
+                      child: _con.order == null
+                          ? Container()
+                          : Column(
+                              children: <Widget>[
+                                Container(
+                                    decoration: BoxDecoration(
+                                        boxShadow: Config.getShadow2(),
+                                        color: Colors.white),
+                                    child: Column(
+                                      children: <Widget>[
                                         Container(
                                             padding: const EdgeInsets.fromLTRB(
                                                 10, 0, 10, 0),
@@ -183,62 +183,71 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                               ],
                                             )),
                                       ],
-                              )),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(
-                                left: 0, right: 0, top: 0),
-                            height: 100,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: Config.getShadow2()),
-                            padding: const EdgeInsets.fromLTRB(18, 0, 18, 0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(_con.order?.getOrderTitle() ?? '',
-                                    style:
-                                        Theme.of(context).textTheme.headline4),
-                                Text(_con.order?.getDescription() ?? '',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .caption!
-                                        .copyWith(color: Colors.grey)),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(_con.order?.getNumberOfItems() ?? '',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle2),
-                                    Text(_con.order?.getTotalPrice() ?? '',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6!
-                                            .copyWith(
-                                                color: Config.primaryColor))
-                                  ],
-                                )
+                                    )),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                      left: 0, right: 0, top: 0),
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      boxShadow: Config.getShadow2()),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(18, 0, 18, 0),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(_con.order?.getOrderTitle() ?? '',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline4),
+                                      Text(_con.order?.getDescription() ?? '',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption!
+                                              .copyWith(color: Colors.grey)),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          Text(
+                                              _con.order?.getNumberOfItems() ??
+                                                  '',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2),
+                                          Text(
+                                              _con.order?.getTotalPrice() ?? '',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6!
+                                                  .copyWith(
+                                                      color:
+                                                          Config.primaryColor))
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+
+                                /// Order products
+                                Expanded(
+                                    flex: 1,
+                                    child: OrderProductListWidget(
+                                      products: _con.order!.products,
+                                    )),
                               ],
                             ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-
-                          /// Order products
-                          Expanded(
-                              flex: 1,
-                              child: OrderProductListWidget(
-                                products: _con.order!.products,
-                              )),
-                        ],
-                      ),
                     ),
 
                     /// Top bar
