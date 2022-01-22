@@ -41,7 +41,7 @@ class Order {
     PaymentMethod paymentMethod = PaymentMethod.fromJSON(parsedJSON['PTTT']);
     Address orderAddress = Address.fromJSON(parsedJSON['DiaChiGiao']);
     Shipper shipper = Shipper.initEmpty();
-    if (parsedJSON['shipper'] != null) {
+    if (parsedJSON['Shipper'] != null) {
       shipper = Shipper.fromJSON(parsedJSON['Shipper']);
     }
     DateTime orderDate = DateTime.parse(parsedJSON['NgayMuaHang']);

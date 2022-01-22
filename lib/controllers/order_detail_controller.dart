@@ -40,6 +40,7 @@ class OrderDetailController extends BaseController {
       var response = await client.get(uri);
       var decodedResponse =
           json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+      printL(decodedResponse);
       order = Order.fromJSON(decodedResponse);
       notifyListeners();
     } catch (e) {
@@ -64,6 +65,7 @@ class OrderDetailController extends BaseController {
             json.decode(response.body) as Map<String, dynamic>;
         var data = Map<String, dynamic>.from(decodedResponse);
         order = Order.fromJSON(data);
+        printL(decodedResponse);
         // To prevent showing snackbar multiple times
         if (!didCallBack) {
           didCallBack = !didCallBack;
@@ -96,6 +98,7 @@ class OrderDetailController extends BaseController {
         var decodedResponse =
             json.decode(response.body) as Map<String, dynamic>;
         var data = Map<String, dynamic>.from(decodedResponse);
+        printL(decodedResponse);
         order = Order.fromJSON(data);
         success(true);
       } else if (response.statusCode == 403) {
@@ -103,14 +106,10 @@ class OrderDetailController extends BaseController {
       } else {
         printL("500");
       }
-      // isLoading = false;
-      // notifyListeners();
       return;
     } catch (e) {
       printL(e);
       success(false);
-      // isLoading = false;
-      // notifyListeners();
     }
 
     isLoading = false;
