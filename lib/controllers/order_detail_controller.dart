@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class OrderDetailController extends BaseController {
-  final currentShipperId = 1;
+  final currentShipperId = 2;
   Order? order;
   String? orderId;
 
@@ -17,12 +17,12 @@ class OrderDetailController extends BaseController {
     return 'DonHang/$orderId';
   }
 
-  String _getOrderComfirmPath(int orderId, int shipperId) {
-    return 'DonHang/$orderId/ShipperXacNhan/$shipperId';
+  String _getOrderComfirmPath() {
+    return 'DonHang/ShipperXacNhan';
   }
 
-  String _getOrderCancelPath(int orderId, int shipperId) {
-    return 'DonHang/$orderId/ShipperHuy/$shipperId';
+  String _getOrderCancelPath() {
+    return 'DonHang/ShipperHuy';
   }
 
   void getOrderLocal(int id) {
@@ -55,11 +55,18 @@ class OrderDetailController extends BaseController {
     var didCallBack = false;
     isLoading = true;
     notifyListeners();
-    Uri uri = Helper.getUri(
-        _getOrderComfirmPath(int.parse(orderId!), currentShipperId));
+    Uri uri = Helper.getUri(_getOrderComfirmPath());
+    var data = <String, int>{
+      'donHangId': int.parse(orderId!),
+      'shipperId': currentShipperId
+    };
     var client = http.Client();
     try {
-      var response = await client.post(uri);
+      var response = await client.post(uri,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: json.encode(data));
       if (response.statusCode == 200) {
         var decodedResponse =
             json.decode(response.body) as Map<String, dynamic>;
@@ -70,30 +77,40 @@ class OrderDetailController extends BaseController {
         if (!didCallBack) {
           didCallBack = !didCallBack;
           success(true);
+          return;
         }
       }
     } catch (e) {
-      printL(e);
       if (!didCallBack) {
         didCallBack = !didCallBack;
         success(false);
       }
+      printL(e);
     }
     isLoading = false;
     notifyListeners();
   }
 
-  Future<void> cancelOrder(Function(bool success) success) async {
+  Future<void> cancelOrder(
+      String reason, Function(bool success) success) async {
     if (orderId == null && isLoading) {
       return;
     }
     isLoading = true;
     notifyListeners();
-    Uri uri = Helper.getUri(
-        _getOrderCancelPath(int.parse(orderId!), currentShipperId));
+    Uri uri = Helper.getUri(_getOrderCancelPath());
+    var data = <String, dynamic>{
+      'donHangId': int.parse(orderId!),
+      'shipperId': currentShipperId,
+      'lyDoHuy': reason
+    };
     var client = http.Client();
     try {
-      var response = await client.post(uri);
+      var response = await client.post(uri,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: json.encode(data));
       if (response.statusCode == 200) {
         var decodedResponse =
             json.decode(response.body) as Map<String, dynamic>;

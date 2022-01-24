@@ -3,7 +3,7 @@ import 'package:dct_shipper/helpers/config.dart';
 import 'package:flutter/material.dart';
 
 class OrderCancelWidget extends StatefulWidget {
-  final Function() didComfirmCancel;
+  final Function(String) didComfirmCancel;
   final Function() didPressClose;
   const OrderCancelWidget(
       {Key? key, required this.didComfirmCancel, required this.didPressClose})
@@ -14,6 +14,17 @@ class OrderCancelWidget extends StatefulWidget {
 }
 
 class _OrderCancelWidgetState extends State<OrderCancelWidget> {
+  late String reason;
+
+  _OrderCancelWidgetState() {
+    reason = "";
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,7 +41,7 @@ class _OrderCancelWidgetState extends State<OrderCancelWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Please write down the reason',
+                'Vui lòng nêu rõ lý do',
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               const SizedBox(
@@ -40,14 +51,17 @@ class _OrderCancelWidgetState extends State<OrderCancelWidget> {
                 decoration: BoxDecoration(
                     color: HexColor.fromHex('#E9E9E9'),
                     borderRadius: BorderRadius.circular(10.0)),
-                child: const TextField(
+                child: TextField(
                   maxLines: 5,
                   keyboardType: TextInputType.multiline,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     contentPadding: EdgeInsets.all(8),
                     border: InputBorder.none,
-                    hintText: 'Reason',
+                    hintText: 'Lý do',
                   ),
+                  onChanged: (value) {
+                    reason = value;
+                  },
                 ),
               ),
               const SizedBox(
@@ -62,12 +76,12 @@ class _OrderCancelWidgetState extends State<OrderCancelWidget> {
                     color: Theme.of(context).errorColor),
                 child: TextButton(
                     onPressed: () {
-                      widget.didComfirmCancel();
+                      widget.didComfirmCancel(reason);
                     },
                     child: const Padding(
                         padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                         child: Text(
-                          'Comfirm cancel',
+                          'Xác nhận huỷ',
                           style: TextStyle(color: Colors.white),
                         ))),
               ),
@@ -88,7 +102,7 @@ class _OrderCancelWidgetState extends State<OrderCancelWidget> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                         child: Text(
-                          'Back',
+                          'Quay lại',
                           style:
                               TextStyle(color: Theme.of(context).primaryColor),
                         ),

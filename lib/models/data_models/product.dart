@@ -10,11 +10,11 @@ class Product {
   Product(this.id, this.name, this.unitPrice, this.weight, this.unit);
 
   String getUnit() {
-    return 'Unit: ' + unit.toString();
+    return 'Đơn vị: ' + unit.toString();
   }
 
   String getWeight() {
-    return 'Weight: ' + weight.toStringAsFixed(2);
+    return 'Trọng lượng: ' + weight.toStringAsFixed(2);
   }
 
   String getUnitPrice() {

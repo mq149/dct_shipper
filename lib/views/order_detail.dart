@@ -260,7 +260,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                           padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                           child: NavbarWidget(
                             floatingTitle: false,
-                            title: 'Order Detail',
+                            title: 'Chi Tiết Đơn Hàng',
                             leftButton: NavbarButton(
                                 icon: Icons.arrow_back,
                                 iconColor: Theme.of(context).primaryColor,
@@ -298,7 +298,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                   child: Container(
                                     padding:
                                         const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                    child: const Text('Accept',
+                                    child: const Text('Nhận đơn',
                                         style: TextStyle(color: Colors.white)),
                                   ),
                                   style: ButtonStyle(
@@ -365,11 +365,11 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                   if (success) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         Helper.getSnackBar(
-                                            'Order comfirmed successfully'));
+                                            'Nhận đơn thành công'));
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         Helper.getSnackBar(
-                                            'Failed to comfirm order'));
+                                            'Nhận đơn không thành công'));
                                   }
                                 })
                               },
@@ -381,18 +381,18 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                     /// Order Cancel Popup
                     _didPressCancel
                         ? OrderCancelWidget(
-                            didComfirmCancel: () {
-                              _con.cancelOrder((success) {
+                            didComfirmCancel: (reason) {
+                              _con.cancelOrder(reason, (success) {
                                 setState(() {
                                   _con.isLoading = false;
                                 });
                                 if (success) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                      Helper.getSnackBar('Order cancelled'));
+                                      Helper.getSnackBar('Huỷ đơn thành công'));
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       Helper.getSnackBar(
-                                          'Failed to cancel order'));
+                                          'Huỷ đơn không thành công'));
                                 }
                                 _setOrderCancelWidget(false);
                               });
