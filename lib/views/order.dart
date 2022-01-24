@@ -72,7 +72,7 @@ class _OrderScreenState extends State<OrderScreen> {
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: NavbarWidget(
-                      title: 'Order',
+                      title: 'Đơn Hàng',
                       leftButton: NavbarButton(
                           icon: Icons.arrow_back,
                           iconColor: Theme.of(context).primaryColor,

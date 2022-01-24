@@ -24,7 +24,7 @@ class Helper {
   static List<Product> getDummyProducts(int numberOfProducts) {
     List<Product> products = [];
     for (var i = 0; i < numberOfProducts; i++) {
-      Product product = Product(i, 'Product Name', 10000, 500, 1);
+      Product product = Product(i, 'Tên sản phẩm', 10000, 500, 1);
       products.add(product);
     }
     return products;
