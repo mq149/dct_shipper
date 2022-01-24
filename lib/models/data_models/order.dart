@@ -62,19 +62,19 @@ class Order {
   }
 
   String getOrderTitle() {
-    return 'Order#' + id.toString() + ': ' + store.name;
+    return 'Đơn Hàng#' + id.toString() + ': ' + store.name;
   }
 
   String getTotalPrice() {
-    return 'Total: ' + total.toStringWithSeparators() + 'đ';
+    return 'Tổng: ' + total.toStringWithSeparators() + 'đ';
   }
 
   String getNumberOfItems() {
-    return 'Number of items: ' + products.length.toString();
+    return 'Số món: ' + products.length.toString();
   }
 
   String getDescription() {
-    String description = 'Order Description: ';
+    String description = 'Ghi chú: ';
     for (var product in products) {
       description += product.name + ' (x' + product.unit.toString() + '), ';
     }
@@ -82,10 +82,10 @@ class Order {
   }
 
   String getStoreAddress() {
-    return 'Store Address: ' + store.address.getAddress();
+    return 'Địa chỉ cửa hàng: ' + store.address.getAddress();
   }
 
   String getOrderAddress() {
-    return 'Customer Address: ' + orderAddress.getAddress();
+    return 'Địa chỉ khách hàng: ' + orderAddress.getAddress();
   }
 }

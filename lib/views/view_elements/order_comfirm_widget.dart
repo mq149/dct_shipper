@@ -22,7 +22,7 @@ class _OrderComfirmWidgetState extends State<OrderComfirmWidget> {
         decoration:
             BoxDecoration(color: Colors.white, boxShadow: Config.getShadow()),
         child: Column(children: <Widget>[
-          Text('Slide to comfirm the order',
+          Text('Vuốt sang phải để xác nhận',
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!
