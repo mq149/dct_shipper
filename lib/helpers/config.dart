@@ -18,6 +18,19 @@ class Config {
     }
   }
 
+  static String baseURL2() {
+    switch (status) {
+      case AppStatus.appDev:
+        return "http://10.0.2.2:8080/api";
+      case AppStatus.webDev:
+        return "http://127.0.0.1:8080/api";
+      case AppStatus.staging:
+        return "";
+      case AppStatus.production:
+        return "";
+    }
+  }
+
   static Map<String, String> headers = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "Access-Control-Allow-Origin, Accept"
@@ -26,6 +39,8 @@ class Config {
   static Color primaryColor = HexColor.fromHex('#58B742');
   static Color accentColor = Colors.white;
   static Color errorColor = HexColor.fromHex('#EE6666');
+  static Color grey = Colors.grey; //HexColor.fromHex('#747474');
+  static Color lightGrey = HexColor.fromHex('#C4C4C4');
   static Color unselectedWidgetColor = HexColor.fromHex('#E5E5E5');
 
   static Duration animationDuration = const Duration(microseconds: 500);
@@ -45,6 +60,15 @@ class Config {
           color: Colors.black.withOpacity(0.05),
           offset: const Offset(0, 15),
           blurRadius: 15)
+    ];
+  }
+
+  static List<BoxShadow> getTextFieldShadow() {
+    return [
+      BoxShadow(
+          color: Colors.black.withOpacity(0.08),
+          offset: const Offset(0, 0),
+          blurRadius: 20)
     ];
   }
 

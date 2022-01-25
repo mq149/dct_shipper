@@ -1,3 +1,6 @@
+import 'package:dct_shipper/views/login.dart';
+import 'package:dct_shipper/views/profile.dart';
+
 import 'views/home.dart';
 import 'views/order.dart';
 import 'views/order_detail.dart';
@@ -12,11 +15,15 @@ class RouteGenerator {
       GlobalKey<ScaffoldState> scaffoldKey, RouteArgument args) {
     switch (routeName) {
       case '/':
-      // return HomeWidget(parentScaffoldKey: scaffoldKey);
       case '/Home':
         return HomeScreen(parentScaffoldKey: scaffoldKey);
       case '/Order':
         return OrderScreen(parentScaffoldKey: scaffoldKey);
+
+      case '/Profile':
+        return ProfileScreen(parentScaffoldKey: scaffoldKey);
+      case '/Login':
+        return LoginScreen(parentScaffoldKey: scaffoldKey);
       default:
         return const SafeArea(child: Text('Screen Error'));
     }
@@ -41,6 +48,10 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) =>
                 OrderDetailScreen(routeArgument: args as RouteArgument));
+      case '/Profile':
+        return MaterialPageRoute(builder: (_) => ProfileScreen());
+      case '/Login':
+        return MaterialPageRoute(builder: (_) => LoginScreen());
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return MaterialPageRoute(
