@@ -23,7 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
-    _con.getProfile();
+    _con.getShipper();
     _con.addListener(() {
       setState(() {});
     });
@@ -176,6 +176,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       style:
                                           Theme.of(context).textTheme.caption),
                                   Text(user_repo.currentShipper.plateNumber),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Center(
+                                    child: Container(
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          boxShadow: Config.getShadow()),
+                                      child: TextButton(
+                                        onPressed: () {
+                                          _con.logOut();
+                                          Navigator.pushReplacementNamed(
+                                              context, "/Login");
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  backgroundColor:
+                                                      Config.primaryColor,
+                                                  content: const Text(
+                                                      'Bạn đã đăng xuất',
+                                                      style: TextStyle(
+                                                          color:
+                                                              Colors.white))));
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              10, 0, 10, 0),
+                                          child: const Text('Đăng xuất',
+                                              style: TextStyle(
+                                                  color: Colors.white)),
+                                        ),
+                                        style: ButtonStyle(
+                                            shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          25.0)),
+                                            ),
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Theme.of(context)
+                                                        .errorColor)),
+                                      ),
+                                    ),
+                                  ),
                                   const SizedBox(
                                     height: 20,
                                   ),

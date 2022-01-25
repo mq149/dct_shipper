@@ -1,18 +1,19 @@
 import 'package:dct_shipper/views/login.dart';
 import 'package:dct_shipper/views/profile.dart';
-
 import 'views/home.dart';
 import 'views/order.dart';
 import 'views/order_detail.dart';
-
 import '../models/route_argument.dart';
 import 'package:flutter/material.dart';
-
 import 'views/pages.dart';
+import 'package:dct_shipper/repositories/user_repository.dart' as user_repo;
 
 class RouteGenerator {
   static Widget generateScreen(String routeName,
       GlobalKey<ScaffoldState> scaffoldKey, RouteArgument args) {
+    if (!user_repo.userAuthenticated()) {
+      return LoginScreen(parentScaffoldKey: scaffoldKey);
+    }
     switch (routeName) {
       case '/':
       case '/Home':
@@ -32,6 +33,9 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
 
+    if (!user_repo.userAuthenticated()) {
+      return MaterialPageRoute(builder: (_) => LoginScreen());
+    }
     switch (settings.name) {
       case '/Home':
         return MaterialPageRoute(builder: (_) => HomeScreen());

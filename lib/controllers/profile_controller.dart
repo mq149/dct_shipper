@@ -6,8 +6,6 @@ import 'dart:convert';
 import 'package:dct_shipper/repositories/user_repository.dart' as user_repo;
 
 class ProfileController extends BaseController {
-  final currentUserId = 3;
-
   bool isLoading = false;
 
   ProfileController();
@@ -16,8 +14,12 @@ class ProfileController extends BaseController {
     return 'shipper/$userId/thong-tin-ca-nhan';
   }
 
-  Future<void> getProfile() async {
-    Uri uri = Helper.getUri2(_getProfilePath(currentUserId));
+  Future<void> getShipper() async {
+    if (!user_repo.userAuthenticated()) {
+      return;
+    }
+
+    Uri uri = Helper.getUri2(_getProfilePath(user_repo.currentUser.id));
     var client = http.Client();
     try {
       var response = await client.get(uri);
@@ -30,5 +32,9 @@ class ProfileController extends BaseController {
     } catch (e) {
       printL(e);
     }
+  }
+
+  void logOut() {
+    user_repo.logOut();
   }
 }
