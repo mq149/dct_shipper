@@ -49,10 +49,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: NavbarWidget(
                       title: 'Profile',
-                      leftButton: NavbarButton(
-                          icon: Icons.arrow_back,
-                          iconColor: Theme.of(context).primaryColor,
-                          onPressed: () => {}),
+                      leftButton: null,
+                      // NavbarButton(
+                      //     icon: Icons.arrow_back,
+                      //     iconColor: Theme.of(context).primaryColor,
+                      //     onPressed: () => {}),
                       rightButton: null
                       // NavbarButton(
                       //     icon: Icons.edit,
