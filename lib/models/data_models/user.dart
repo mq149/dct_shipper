@@ -15,7 +15,7 @@ class User {
       this.address, this.gender, this.birthdate);
 
   factory User.initEmpty() {
-    return User(0, Role.initEmpty(), '', '', '', Address.initEmpty(), '',
+    return User(-1, Role.initEmpty(), '', '', '', Address.initEmpty(), '',
         DateTime.now());
   }
 
@@ -24,7 +24,7 @@ class User {
         parsedJson['Id'] ?? 0,
         Role.initEmpty(),
         parsedJson['SDT'] ?? '',
-        parsedJson['Email'] ?? '',
+        parsedJson['email'] ?? '',
         parsedJson['HoTen'] ?? '',
         parsedJson['DiaChi'] != null
             ? Address.fromJSON(parsedJson['DiaChi'])
