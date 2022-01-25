@@ -37,4 +37,14 @@ class Address {
         district: parsedJson['QuanHuyen'] ?? '',
         city: parsedJson['TinhTP'] ?? '');
   }
+
+  factory Address.fromJSON2(Map<String, dynamic> parsedJson) {
+    return Address(
+        id: parsedJson['id'],
+        number: parsedJson['soNhaTo'] ?? '',
+        street: parsedJson['duong'] ?? '',
+        subdistrict: parsedJson['xaPhuong'] ?? '',
+        district: parsedJson['quanHuyen'] ?? '',
+        city: parsedJson['tinhTP'] ?? '');
+  }
 }

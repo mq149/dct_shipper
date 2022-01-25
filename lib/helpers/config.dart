@@ -18,6 +18,19 @@ class Config {
     }
   }
 
+  static String baseURL2() {
+    switch (status) {
+      case AppStatus.appDev:
+        return "http://10.0.2.2:8080/api";
+      case AppStatus.webDev:
+        return "http://127.0.0.1:8080/api";
+      case AppStatus.staging:
+        return "";
+      case AppStatus.production:
+        return "";
+    }
+  }
+
   static Map<String, String> headers = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "Access-Control-Allow-Origin, Accept"
@@ -47,6 +60,15 @@ class Config {
           color: Colors.black.withOpacity(0.05),
           offset: const Offset(0, 15),
           blurRadius: 15)
+    ];
+  }
+
+  static List<BoxShadow> getTextFieldShadow() {
+    return [
+      BoxShadow(
+          color: Colors.black.withOpacity(0.08),
+          offset: const Offset(0, 0),
+          blurRadius: 20)
     ];
   }
 

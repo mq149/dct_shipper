@@ -43,9 +43,19 @@ class Helper {
         district: "Quan 1",
         city: "TP. HCM");
     final customer = Customer(1, role, "0123456778", "someemail@email.com",
-        "KhachHang A", address, 1, "294125324");
-    final store = Store(2, role, "3951251414", "storeemail@email.com",
-        "Co-op Mart Cong Quynh", address, 1, "Co-op Mart Cong Quynh", true);
+        "KhachHang A", address, '', null, 1, "294125324");
+    final store = Store(
+        2,
+        role,
+        "3951251414",
+        "storeemail@email.com",
+        "Co-op Mart Cong Quynh",
+        address,
+        '',
+        null,
+        1,
+        "Co-op Mart Cong Quynh",
+        true);
     final shipper = Shipper(
         3,
         role,
@@ -53,6 +63,8 @@ class Helper {
         "shipperemail@email.com",
         "Bui Minh Quan",
         address,
+        '',
+        null,
         1,
         "214128452",
         true,
@@ -86,6 +98,19 @@ class Helper {
         scheme: Uri.parse(Config.baseURL()).scheme,
         host: Uri.parse(Config.baseURL()).host,
         port: Uri.parse(Config.baseURL()).port,
+        path: _path + path);
+    return uri;
+  }
+
+  static Uri getUri2(String path) {
+    String _path = Uri.parse(Config.baseURL2()).path;
+    if (!_path.endsWith('/')) {
+      _path += '/';
+    }
+    Uri uri = Uri(
+        scheme: Uri.parse(Config.baseURL2()).scheme,
+        host: Uri.parse(Config.baseURL2()).host,
+        port: Uri.parse(Config.baseURL2()).port,
         path: _path + path);
     return uri;
   }
